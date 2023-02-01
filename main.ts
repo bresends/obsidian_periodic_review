@@ -8,6 +8,7 @@ import {
 	PluginSettingTab,
 	Setting,
 } from "obsidian";
+import { ResponseModal } from "responseModal";
 
 // Remember to rename these classes and interfaces!
 
@@ -82,14 +83,16 @@ export default class MyPlugin extends Plugin {
 				const markdownView =
 					this.app.workspace.getActiveViewOfType(MarkdownView);
 				if (markdownView) {
-					// If checking is true, we're simply "checking" if the command can be run.
-					// If checking is false, then we want to actually perform the operation.
 					if (!checking) {
-						new SampleModal(this.app).open();
+						new ResponseModal(this.app, (result) => {
+							if (!result) {
+								return;
+							}
+							new Notice("Revisão Agendada com sucesso!");
+						}).open();
 					}
 
 					// This command will only show up in Command Palette when the check function returns true
-					console.log("Ok");
 					return true;
 				}
 			},
@@ -116,22 +119,6 @@ export default class MyPlugin extends Plugin {
 	}
 }
 
-class SampleModal extends Modal {
-	constructor(app: App) {
-		super(app);
-	}
-
-	onOpen() {
-		const { contentEl } = this;
-		contentEl.setText("Woah!");
-	}
-
-	onClose() {
-		const { contentEl } = this;
-		contentEl.empty();
-	}
-}
-
 class SampleSettingTab extends PluginSettingTab {
 	plugin: MyPlugin;
 
@@ -145,14 +132,14 @@ class SampleSettingTab extends PluginSettingTab {
 
 		containerEl.empty();
 
-		containerEl.createEl("h2", { text: "Settings for my awesome plugin." });
+		containerEl.createEl("h2", { text: "Configurações de Plugin." });
 
 		new Setting(containerEl)
-			.setName("Setting #1")
-			.setDesc("It's a secret")
+			.setName("Configuração #1")
+			.setDesc("API secret")
 			.addText((text) =>
 				text
-					.setPlaceholder("Enter your secret")
+					.setPlaceholder("Entre com a API Key")
 					.setValue(this.plugin.settings.mySetting)
 					.onChange(async (value) => {
 						console.log("Secret: " + value);
