@@ -3,7 +3,7 @@
 	"name": "Progressive Notes Review Plugin",
 	"version": "1.0.0",
 	"minAppVersion": "0.15.0",
-	"description": "This is a sample plugin for Obsidian. This plugin demonstrates some of the capabilities of the Obsidian API.",
+	"description": "This is a  plugin for scheduling reviews for notes. The idea is to make the best use of the notes taken making appear to read after a certain ammount of time.",
 	"author": "Bruno Resende dos Santos",
 	"authorUrl": "https://github.com/bresends",
 	"isDesktopOnly": false
