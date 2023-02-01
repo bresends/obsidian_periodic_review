@@ -4,7 +4,6 @@ import {
 	MarkdownView,
 	Modal,
 	Notice,
-	parseFrontMatterEntry,
 	Plugin,
 	PluginSettingTab,
 	Setting,
@@ -38,14 +37,6 @@ export default class MyPlugin extends Plugin {
 		// Perform additional things with the ribbon
 		ribbonIconEl.addClass("my-plugin-ribbon-class");
 
-		// This adds a simple command that can be triggered anywhere
-		this.addCommand({
-			id: "open-sample-modal-simple",
-			name: "Open sample modal (simple)",
-			callback: () => {
-				new SampleModal(this.app).open();
-			},
-		});
 		// This adds an editor command that can perform some operation on the current editor instance
 		this.addCommand({
 			id: "update-frontmatter",
@@ -60,16 +51,19 @@ export default class MyPlugin extends Plugin {
 					this.app.metadataCache.getFileCache(file)?.frontmatter;
 
 				if (!frontMatter) {
-					editor.setCursor(0);
-					editor.replaceSelection(
+					const oldText = editor.getValue();
+
+					editor.setValue(
 						"---" +
 							"\ncreated_at: " +
 							new Date(file.stat.ctime).toISOString() +
 							"\nlast_review: " +
 							new Date().toISOString() +
 							"\nreview_count: 0" +
-							"\n---"
+							"\n---\n" +
+							oldText
 					);
+
 					return;
 				}
 
@@ -95,6 +89,7 @@ export default class MyPlugin extends Plugin {
 					}
 
 					// This command will only show up in Command Palette when the check function returns true
+					console.log("Ok");
 					return true;
 				}
 			},
