@@ -2,13 +2,13 @@ import {
 	App,
 	Editor,
 	MarkdownView,
-	Modal,
 	Notice,
 	Plugin,
 	PluginSettingTab,
 	Setting,
 } from "obsidian";
 import { ResponseModal } from "responseModal";
+import { calculateNextReview } from "utils";
 
 // Remember to rename these classes and interfaces!
 
@@ -60,18 +60,32 @@ export default class MyPlugin extends Plugin {
 							new Date(file.stat.ctime).toISOString() +
 							"\nlast_review: " +
 							new Date().toISOString() +
+							"\nnext_review: " +
+							calculateNextReview(0, new Date()).toISOString() +
 							"\nreview_count: 0" +
 							"\n---\n" +
 							oldText
 					);
 
+					new Notice("Esta nota entrou no ciclo de revisões!");
+
 					return;
 				}
 
-				app.fileManager.processFrontMatter(file, (frontMatter) => {
-					frontMatter["review_count"] += 1;
-					frontMatter["last_review"] = new Date().toISOString();
-				});
+				new ResponseModal(this.app, (result) => {
+					if (!result) {
+						return;
+					}
+					new Notice("Revisão Agendada com sucesso!");
+					app.fileManager.processFrontMatter(file, (frontMatter) => {
+						frontMatter["review_count"] += 1;
+						frontMatter["last_review"] = new Date().toISOString();
+						frontMatter["next_review"] = calculateNextReview(
+							frontMatter["review_count"],
+							new Date(frontMatter["last_review"])
+						).toISOString();
+					});
+				}).open();
 			},
 		});
 		// This adds a complex command that can check whether the current state of the app allows execution of the command
