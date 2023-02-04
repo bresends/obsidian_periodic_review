@@ -67,7 +67,6 @@ export default class MyPlugin extends Plugin {
 			if (!result) {
 				return;
 			}
-			new Notice("Revisão Agendada com sucesso!");
 			app.fileManager.processFrontMatter(file, (frontMatter) => {
 				frontMatter["review_count"] += 1;
 				frontMatter["last_review"] = new Date().toISOString();
@@ -76,6 +75,10 @@ export default class MyPlugin extends Plugin {
 					new Date(frontMatter["last_review"])
 				).toISOString();
 			});
+			new Notice(
+				"Sucefully reviewed. Next one is scheduled for: " +
+					new Date(frontMatter["next_review"]).toLocaleDateString()
+			);
 		}).open();
 	}
 
