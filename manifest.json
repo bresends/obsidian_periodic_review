@@ -1,9 +1,9 @@
 {
-	"id": "Progressive Notes Review",
-	"name": "Progressive Notes Review Plugin",
+	"id": "Obsidian Periodic Reviews",
+	"name": "Periodic Reviews",
 	"version": "1.0.0",
 	"minAppVersion": "0.15.0",
-	"description": "This is a  plugin for scheduling reviews for notes. The idea is to make the best use of the notes taken making appear to read after a certain ammount of time.",
+	"description": "This is a  plugin designed to create the functionality of scheduling reviews for notes created using Obsidian. The idea is to make the best use of the notes taken, making them to appear to read after a certain ammount of time. This ensures that the notes taken are utilized to their full potential by making them reappear for review after a designated period of time. By implementing this feature, users can maintain a comprehensive understanding of their notes and keep the information fresh in their minds.",
 	"author": "Bruno Resende dos Santos",
 	"authorUrl": "https://github.com/bresends",
 	"isDesktopOnly": false
