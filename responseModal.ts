@@ -14,21 +14,21 @@ export class ResponseModal extends Modal {
 	onOpen() {
 		const { contentEl } = this;
 
-		contentEl.createEl("h2", { text: "Nota revisada com aproveitamento?" });
+		contentEl.createEl("h2", { text: "Note reviewed successfully ?" });
 		contentEl.createEl("p", {
-			text: "Esta nota está em sua memória ativa? O conteúdo está claro?",
+			text: "Is this in your active memory ? Are the contents clear ?",
 		});
 
 		new Setting(contentEl)
 			.addButton((btn) =>
-				btn.setButtonText("Cancelar").onClick(() => {
+				btn.setButtonText("Cancel").onClick(() => {
 					this.close();
 					this.onSubmit(false);
 				})
 			)
 			.addButton((btn) =>
 				btn
-					.setButtonText("Confirmar")
+					.setButtonText("Confirm")
 					.setCta()
 					.onClick(() => {
 						this.close();
