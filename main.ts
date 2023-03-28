@@ -2,8 +2,6 @@ import { App, Notice, Plugin, PluginSettingTab, Setting } from "obsidian";
 import { ResponseModal } from "responseModal";
 import { calculateNextReview } from "utils";
 
-// Remember to rename these classes and interfaces!
-
 interface Settings {
 	mySetting: string;
 }
@@ -12,7 +10,7 @@ const DEFAULT_SETTINGS: Settings = {
 	mySetting: "default",
 };
 
-export default class MyPlugin extends Plugin {
+export default class PeriodicReview extends Plugin {
 	settings: Settings;
 
 	async onload() {
@@ -55,8 +53,10 @@ export default class MyPlugin extends Plugin {
 				frontMatter["last_review"] = new Date().toISOString();
 				frontMatter["next_review"] = calculateNextReview(
 					0,
+					false,
 					new Date()
 				).toISOString();
+				frontMatter["recurring"] = false;
 				frontMatter["review_count"] = 0;
 			});
 
@@ -72,6 +72,7 @@ export default class MyPlugin extends Plugin {
 				frontMatter["last_review"] = new Date().toISOString();
 				frontMatter["next_review"] = calculateNextReview(
 					frontMatter["review_count"],
+					frontMatter["recurring"],
 					new Date(frontMatter["last_review"])
 				).toISOString();
 			});
@@ -100,9 +101,9 @@ export default class MyPlugin extends Plugin {
 }
 
 class SampleSettingTab extends PluginSettingTab {
-	plugin: MyPlugin;
+	plugin: PeriodicReview;
 
-	constructor(app: App, plugin: MyPlugin) {
+	constructor(app: App, plugin: PeriodicReview) {
 		super(app, plugin);
 		this.plugin = plugin;
 	}

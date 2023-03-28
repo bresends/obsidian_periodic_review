@@ -14,9 +14,9 @@ export class ResponseModal extends Modal {
 	onOpen() {
 		const { contentEl } = this;
 
-		contentEl.createEl("h2", { text: "Note reviewed successfully ?" });
+		contentEl.createEl("h2", { text: "Reviewed successfully?" });
 		contentEl.createEl("p", {
-			text: "Is this in your active memory ? Are the contents clear ?",
+			text: "Is this in your active memory? Are you applying it?",
 		});
 
 		new Setting(contentEl)
